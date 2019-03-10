@@ -8,7 +8,9 @@ import (
 )
 
 const GITHUB_API_BASE = "https://api.github.com"
+
 const CONTENT_TYPE_TAR_GZ = "application/x-gzip"
+const CONTENT_TYPE_ZIP = "application/zip"
 
 type Asset struct {
 	DownloadURL string `json:"browser_download_url"`
