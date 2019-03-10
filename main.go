@@ -14,7 +14,9 @@ var domain = flag.String("domain", "",
 	"domain used for this currently running instance (enables SSL, and mints certs through LetsEncrypt")
 
 func main() {
+	flag.Parse()
 	router := httprouter.New()
+	router.GET("/", handlers.Home)
 	router.GET("/:username/:repo", handlers.Download)
 	if *domain != "" {
 		log.Printf("Listening at https://%s", *domain)
