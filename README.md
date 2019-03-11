@@ -11,7 +11,7 @@ This software is a simple server that makes it easy to download the latest binar
 I mostly just built this as a way to distribute my software binaries easily without dealing with `brew`, `npm`, etc (though they certainly have their advantages & trust). I can just give my users a one line download link that will always get them the latest released binary for their platform, and all I have to do is just update GitHub releases like I normally do.
 
 ## Usage
-Let's say you wanted to get the latest binary for `suyashkumar/ssl-proxy` onto your machine. You could simply do:
+Let's say you wanted to get the latest binary for <a href="https://github.com/suyashkumar/ssl-proxy" target="_blank"><code>suyashkumar/ssl-proxy</code></a> onto your machine. You could simply do:
 ```sh
 wget -qO- "https://bin.suyash.io/suyashkumar/ssl-proxy" | tar xvz 
 ```
