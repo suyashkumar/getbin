@@ -1,13 +1,14 @@
 <p align="center">
   <img src="https://suyashkumar.com/assets/img/terminal_large.png" width="80">
   <h3 align="center">GitHub Release Downloader</h3>
-  <p align="center">Download latest GitHub release binaries using <code>wget</code> or <code>curl</code></p>
+  <p align="center">Download latest GitHub release binaries (for your OS/arch) using <code>wget</code> or <code>curl</code></p>
+  <p align="center"><code>wget https://bin.suyash.io/github_username/repo</code></p>
 </p>
 
 
 This software is a simple server that makes it easy to download the latest binary associated with any GitHub repository release (without having to know the GitHub release asset URL in advance). 
 
-I mostly just built this as a way to distribute my software binaries easily without dealing with `brew`, `npm`, etc (though they certainly have their advantages & trust). I can just give my users a one line download link that will always get them the latest released binary for their platform.
+I mostly just built this as a way to distribute my software binaries easily without dealing with `brew`, `npm`, etc (though they certainly have their advantages & trust). I can just give my users a one line download link that will always get them the latest released binary for their platform, and all I have to do is just update GitHub releases like I normally do.
 
 ## Usage
 Let's say you wanted to get the latest binary for `suyashkumar/ssl-proxy` onto your machine. You could simply do:
