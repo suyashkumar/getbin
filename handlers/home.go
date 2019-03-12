@@ -18,7 +18,10 @@ const HomeMessage = `
 		<h1> GitHub Release Downloader </h1>
 		<p>
 			This tool helps you download the latest binaries from GitHub releases quickly using curl or wget.
-			For example, you can do the following to get the latest version of 
+			Find out more at the <a href="https://github.com/suyashkumar/bin">GitHub README for this project.</a>
+		</p>
+		<p>
+			Let's say you wanted to download the latest version of	
 			<a href="https://github.com/suyashkumar/ssl-proxy" target="_blank"> <code>ssl-proxy</code> </a>
 			for your OS: 
 		</p>
