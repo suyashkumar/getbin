@@ -65,6 +65,11 @@ func Download(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		log.Println("Unable to get latest release from GitHub", err)
 		return
 	}
+	if len(rls) == 0 {
+		sendErrorWithCode(w, "No GitHub Releases for this repo.", 400)
+		log.Println("No GitHub releases for this repo.", err)
+		return
+	}
 
 	latestRelease := rls[0]
 
