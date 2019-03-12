@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://suyashkumar.com/assets/img/terminal_large.png" width="80">
   <h3 align="center">GitHub Release Downloader</h3>
-  <p align="center">Automatically download latest GitHub release binaries (for your OS/arch) using <code>wget</code> or <code>curl</code></p>
+  <p align="center">Download latest GitHub release binaries (for your OS/arch) using <code>wget</code> or <code>curl</code></p>
   <p align="center"><code>wget --content-disposition https://bin.suyash.io/github_username/repo</code></p>
 </p>
 
