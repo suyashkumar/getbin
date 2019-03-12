@@ -2,10 +2,10 @@
   <img src="https://suyashkumar.com/assets/img/terminal_large.png" width="80">
   <h3 align="center">GitHub Release Downloader</h3>
   <p align="center">Download latest GitHub release binaries (for your OS/arch) using <code>wget</code> or <code>curl</code></p>
-  <p align="center"><code>wget https://bin.suyash.io/github_username/repo</code></p>
+  <p align="center"><code>wget --content-disposition https://bin.suyash.io/github_username/repo</code></p>
 </p>
 
-
+## Overview
 This is a simple server (deployed @ https://bin.suyash.io) that makes it easy to download the latest binary associated with any GitHub repository release using regular old `wget` and `curl` (without having to know the GitHub release asset URL in advance). It attempts to use your User-Agent to fetch the right GitHub release asset for your OS/arch, but also lets you provide query parameters to specify OS/arch, and optionally uncompress the release artifact on the fly.
 
 I mostly just built this as a way to distribute my software binaries easily without dealing with `brew`, `npm`, etc (though they certainly have their advantages & trust). I can just give my users a one line download link that will always get them the latest released binary for their platform, and all I have to do is just update GitHub releases like I normally do.
@@ -40,4 +40,4 @@ curl -LOJ "https://bin.suyash.io/suyashkumar/ssl-proxy?os=darwin"
 - [x] Inline, automatic uncompression of binaries
 - [ ] Handle GitHub preleases
 - [ ] Handle different architectures without assumptions
-- [ ] Improved binary name matching
+- [ ] Improved binary name matching regex
