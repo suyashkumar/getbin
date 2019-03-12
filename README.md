@@ -29,7 +29,7 @@ If you want to not bother with piping into tar or zip as above, the server can d
 wget --content-disposition "https://bin.suyash.io/suyashkumar/ssl-proxy?uncompress=true" 
 ```
 
-If your release asset is not compressed, you can simply:
+If your release asset is __not compressed__, you can simply:
 ```sh
 wget --content-disposition "https://bin.suyash.io/suyashkumar/ssl-proxy"
 ```
