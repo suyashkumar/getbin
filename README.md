@@ -13,7 +13,7 @@ I mostly just built this as a way to distribute my software binaries easily with
 Basic functionality currently exists (with some assumptions, see below), but this is still a work in progress with many improvements forthcoming. This currently will work as expected with all of my repos/releases.
 
 ## Usage
-Let's say you wanted to get the latest binary for [`suyashkumar/ssl-proxy`](https://github.com/suyashkumar/ssl-proxy) onto your machine for your OS/arch (note: arch is currently assumed to be amd64/x86, but OS is detected). The release is compressed, so you could simply do:
+Let's say you wanted to get the latest [`suyashkumar/ssl-proxy`](https://github.com/suyashkumar/ssl-proxy) binary for your OS/arch. The release is compressed, so you could simply do:
 ```sh
 wget -qO- "https://bin.suyash.io/suyashkumar/ssl-proxy" | tar xvz 
 ```
