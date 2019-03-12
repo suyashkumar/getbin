@@ -6,16 +6,16 @@
 </p>
 
 
-This software is a simple server that makes it easy to download the latest binary associated with any GitHub repository release (without having to know the GitHub release asset URL in advance). 
+This is a simple server (deployed @ https://bin.suyash.io) that makes it easy to download the latest binary associated with any GitHub repository release using regular old `wget` and `curl` (without having to know the GitHub release asset URL in advance). It attempts to use your User-Agent to fetch the right GitHub release asset for your OS/arch, but also lets you provide query parameters to specify OS/arch, and optionally uncompress the release artifact on the fly.
 
 I mostly just built this as a way to distribute my software binaries easily without dealing with `brew`, `npm`, etc (though they certainly have their advantages & trust). I can just give my users a one line download link that will always get them the latest released binary for their platform, and all I have to do is just update GitHub releases like I normally do.
 
 ## Usage
-Let's say you wanted to get the latest binary for [`suyashkumar/ssl-proxy`](https://github.com/suyashkumar/ssl-proxy) onto your machine. You could simply do:
+Let's say you wanted to get the latest binary for [`suyashkumar/ssl-proxy`](https://github.com/suyashkumar/ssl-proxy) onto your machine. The release is compressed, so you could simply do:
 ```sh
 wget -qO- "https://bin.suyash.io/suyashkumar/ssl-proxy" | tar xvz 
 ```
-or with `curl` you usually must specify your os:
+or with `curl` you usually must specify your os (since it is not included in the User-Agent):
 ```sh
 curl -LJ "https://bin.suyash.io/suyashkumar/ssl-proxy?os=darwin" | tar xvz 
 ```
