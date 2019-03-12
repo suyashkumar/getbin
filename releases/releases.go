@@ -18,14 +18,14 @@ type Asset struct {
 }
 
 type Release struct {
-	URL string `json:"url"`
-	Assets []Asset `json:"assets"`
-	TagName string `json:"tag_name"`
+	URL     string  `json:"url"`
+	Assets  []Asset `json:"assets"`
+	TagName string  `json:"tag_name"`
 }
 
 type GithubRepo struct {
 	Username string
-	Repo string
+	Repo     string
 }
 
 // Get fetches the releases for a provided GithubRepo
