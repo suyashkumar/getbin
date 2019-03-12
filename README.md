@@ -13,7 +13,7 @@ I mostly just built this as a way to distribute my software binaries easily with
 Basic functionality currently exists (with some assumptions, see below), but this is still a work in progress with many improvements forthcoming. This currently will work as expected with all of my repos/releases.
 
 ## Usage
-Let's say you wanted to get the latest [`suyashkumar/ssl-proxy`](https://github.com/suyashkumar/ssl-proxy) binary for your OS/arch. The release is compressed, so you could simply do:
+Let's say you wanted to get the __latest__ [`suyashkumar/ssl-proxy`](https://github.com/suyashkumar/ssl-proxy) binary for your OS/arch. You simply:
 ```sh
 wget -qO- "https://bin.suyash.io/suyashkumar/ssl-proxy" | tar xvz 
 ```
@@ -21,7 +21,7 @@ or with `curl` you usually must specify your os (since it is not included in the
 ```sh
 curl -LJ "https://bin.suyash.io/suyashkumar/ssl-proxy?os=darwin" | tar xvz 
 ```
-Generally, the server software attempts to detect your OS (and in the future, architecture) automatically from your `User-Agent`, but also allows you to specify your own intentions as seen with `curl` above. 
+Generally, the server software attempts to detect your OS (and in the future, architecture) automatically from your `User-Agent`, but also allows you to specify your own intentions as seen with `curl` above. We're piping into `tar` here because the original release assets are compressed, but you can:
 
 #### Uncompress on the fly
 If you want to not bother with piping into tar or zip as above, the server can decompress on the fly to serve you the binary (assuming it is the only file in the archive):
@@ -29,12 +29,15 @@ If you want to not bother with piping into tar or zip as above, the server can d
 wget --content-disposition "https://bin.suyash.io/suyashkumar/ssl-proxy?os=darwin?uncompress=true" 
 ```
 
-**Note:** The above assumes that the released binary asset is compressed using `tar.gz`, but if it isn't you can leave out the piping into `tar`:
-
-**Download GitHub release asset that is not compressed**:
+If your release asset is not compressed, you can simply:
+```sh
+wget --content-disposition "https://bin.suyash.io/suyashkumar/ssl-proxy"
+```
+or
 ```sh
 curl -LOJ "https://bin.suyash.io/suyashkumar/ssl-proxy?os=darwin"
 ```
+
 
 ## Notes & Assumptions
 - If you are not using the inline uncompress feature, you'll notice that the server just transparently issues `wget` or `curl` a 301 HTTP redirect to the proper GitHub artifact URL. This way you can have some faith the artifact is whatever was uploaded to that GitHub release.
