@@ -54,3 +54,6 @@ curl -LOJ "https://bin.suyash.io/suyashkumar/ssl-proxy?os=darwin"
 - [ ] Handle different architectures without assumptions (currently assuming x86/amd64)
 - [ ] Improved binary name matching regex
 - [ ] Fetch specific tagged releases
+
+## Attribution
+The [terminal icon](https://www.iconfinder.com/icons/285695/terminal_icon) used above is made by [Paomedia](https://www.iconfinder.com/paomedia) from iconfinder.com and is released under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/). 
