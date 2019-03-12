@@ -40,6 +40,7 @@ type DownloadOptions struct {
 var isDarwin = regexp.MustCompile(`(?i).*darwin.*`)
 var isLinux = regexp.MustCompile(`(?i).*linux.*`)
 var isWindows = regexp.MustCompile(`(?i).*windows.*`)
+var isX86AMD64 = regexp.MustCompile(`(?i).*(x86|amd64).*`)
 
 var osToTester = map[OS]*regexp.Regexp{
 	OS_DARWIN:  isDarwin,
@@ -84,7 +85,7 @@ func Download(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	var currentAsset *releases.Asset
 	for _, a := range latestRelease.Assets {
 		file := path.Base(a.DownloadURL)
-		if currentPlatformTest.MatchString(file) {
+		if currentPlatformTest.MatchString(file) && isX86AMD64.MatchString(file) { // match os and x86/amd64
 			currentAsset = &a
 			break
 		}
