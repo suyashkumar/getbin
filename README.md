@@ -26,7 +26,7 @@ Generally, the server software attempts to detect your OS (and in the future, ar
 #### Uncompress on the fly
 If you want to not bother with piping into tar or zip as above, the server can decompress on the fly to serve you the binary (assuming it is the only file in the archive):
 ```sh
-wget --content-disposition "https://bin.suyash.io/suyashkumar/ssl-proxy?os=darwin?uncompress=true" 
+wget --content-disposition "https://bin.suyash.io/suyashkumar/ssl-proxy?uncompress=true" 
 ```
 
 If your release asset is not compressed, you can simply:
