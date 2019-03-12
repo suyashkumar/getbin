@@ -51,3 +51,4 @@ curl -LOJ "https://bin.suyash.io/suyashkumar/ssl-proxy?os=darwin"
 - [ ] Handle GitHub preleases
 - [ ] Handle different architectures without assumptions (currently assuming x86/amd64)
 - [ ] Improved binary name matching regex
+- [ ] Fetch specific tagged releases
