@@ -8,7 +8,7 @@
 </p>
 
 ## Overview
-This is a simple server (deployed @ https://bin.suyash.io) that makes it easy to download the latest binary associated with any GitHub repository release using regular old `wget` and `curl`. It attempts to use your User-Agent to fetch the right GitHub release asset for your OS/arch, but also lets you provide query parameters to specify OS/arch, and optionally uncompress the release artifact on the fly.
+This is a simple server (deployed @ https://bin.suyash.io) that makes it easy to download the latest binary associated with _any GitHub repo release_ using regular old `wget` and `curl`. It attempts to use your User-Agent to fetch the right GitHub release asset for your OS/arch, but also lets you provide query parameters to specify OS/arch, and optionally uncompress the release artifact on the fly. 
 
 I mostly just built this as a way to distribute my software binaries easily without dealing with `brew`, `npm`, etc (though they certainly have their advantages & trust). I can just give my users a one line download link that will always get them the latest released binary for their platform, and _all I have to do is just update GitHub releases like I normally do_.
 
@@ -17,15 +17,19 @@ Basic functionality currently exists (with some assumptions, see below), but thi
 ## Usage
 Let's say you wanted to get the __latest__ [`suyashkumar/ssl-proxy`](https://github.com/suyashkumar/ssl-proxy) binary for your OS/arch. You simply:
 ```sh
-wget -qO- "https://bin.suyash.io/suyashkumar/ssl-proxy" | tar xvz 
+wget -qO- https://bin.suyash.io/suyashkumar/ssl-proxy | tar xvz 
 ```
 or with `curl` you usually must specify your os (since it is not included in the User-Agent):
 ```sh
 curl -LJ "https://bin.suyash.io/suyashkumar/ssl-proxy?os=darwin" | tar xvz 
 ```
-The request format is `GET https://bin.suyash.io/github_username/repo`
+### General format to work with any* repo
+The generalized request format is `GET https://bin.suyash.io/GITHUB_USERNAME/GITHUB_REPO`. Again the goal is for this server to work for any repo (see section below for assumptions). Let's say we wanted the latest distribution of [`goreleaser/goreleaser`](https://github.com/goreleaser/goreleaser/):
+```sh
+wget -qO- https://bin.suyash.io/goreleaser/goreleaser | tar xvz 
+```
 
-Generally, the server software attempts to detect your OS (and in the future, architecture) automatically from your `User-Agent`, but also allows you to specify your own intentions as seen with `curl` above. We're piping into `tar` here because the original release assets are compressed, but you can:
+Generally, the server software attempts to detect your OS (and in the future, architecture) automatically from your `User-Agent`, but also allows you to specify your own intentions as seen with `curl` above. We're piping into `tar` here because the original release assets are compressed, but you can also uncompress on the fly (see below)
 
 #### Uncompress on the fly
 If you want to not bother with piping into tar or zip as above, the server can decompress on the fly to serve you the binary (assuming it is the only file in the archive):
