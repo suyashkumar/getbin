@@ -37,7 +37,7 @@ type DownloadOptions struct {
 }
 
 // Simple regex for now, used both for User-Agent and for matching GitHub release asset names
-var isDarwin = regexp.MustCompile(`(?i).*darwin.*`)
+var isDarwin = regexp.MustCompile(`(?i).*(darwin|macintosh).*`)
 var isLinux = regexp.MustCompile(`(?i).*linux.*`)
 var isWindows = regexp.MustCompile(`(?i).*windows.*`)
 var isX86AMD64 = regexp.MustCompile(`(?i).*(x86|amd64).*`)
@@ -95,7 +95,9 @@ func Download(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 			break
 		}
 	}
+
 	log.Printf("User-Agent: %s", r.Header.Get("User-Agent"))
+	log.Printf("Selected Asset: %s", currentAsset.DownloadURL)
 	if !opts.Uncompress {
 		w.Header().Add("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", path.Base(currentAsset.DownloadURL)))
 		http.Redirect(w, r, currentAsset.DownloadURL, http.StatusMovedPermanently)
