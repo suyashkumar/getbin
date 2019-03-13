@@ -20,17 +20,22 @@ import (
 	"github.com/suyashkumar/bin/releases"
 )
 
+// OS is an enum representing an operating system variant
 type OS string
 
-const OS_WINDOWS = "WINDOWS"
-const OS_DARWIN = "DARWIN"
-const OS_LINUX = "LINUX"
-const OS_EMPTY = ""
+// OS enumerated values
+const (
+	OSWindows = "WINDOWS"
+	OSDarwin  = "DARWIN"
+	OSLinux   = "LINUX"
+	OSEmpty   = ""
+)
 
 func (o OS) isValid() bool {
-	return o == OS_WINDOWS || o == OS_DARWIN || o == OS_LINUX
+	return o == OSWindows || o == OSDarwin || o == OSLinux
 }
 
+// DownloadOptions represents various options that can be supplied to the download endpoint
 type DownloadOptions struct {
 	OS         OS
 	Uncompress bool
@@ -43,9 +48,9 @@ var isWindows = regexp.MustCompile(`(?i).*windows.*`)
 var isX86AMD64 = regexp.MustCompile(`(?i).*(x86|amd64).*`)
 
 var osToTester = map[OS]*regexp.Regexp{
-	OS_DARWIN:  isDarwin,
-	OS_LINUX:   isLinux,
-	OS_WINDOWS: isWindows,
+	OSDarwin:  isDarwin,
+	OSLinux:   isLinux,
+	OSWindows: isWindows,
 }
 
 // Download handles resolving the latest GitHub release for the given request and either redirecting the download request
@@ -74,7 +79,7 @@ func Download(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	latestRelease := rls[0]
 
 	var currentPlatformTest *regexp.Regexp
-	if opts.OS != OS_EMPTY {
+	if opts.OS != OSEmpty {
 		currentPlatformTest = osToTester[opts.OS]
 	} else {
 		currentPlatformTest = isLinux // Note: linux is the default
@@ -107,7 +112,7 @@ func Download(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		w.Header().Add("Content-Type", "application/octet-stream")
 		binaryFile, err := http.Get(currentAsset.DownloadURL)
 
-		if currentAsset.ContentType == releases.CONTENT_TYPE_TAR_GZ {
+		if currentAsset.ContentType == releases.ContentTypeTARGZ {
 			// assume tar.gz
 			if err != nil {
 				sendErrorWithCode(
@@ -127,14 +132,20 @@ func Download(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 				log.Println("Issue uncompressing", err)
 				return
 			}
+
 			h, err := tr.Next()
+			if err != nil {
+				sendErrorWithCode(w, "Issue uncompressing (tar Next)", 500)
+				log.Println("Issue uncompressing (tar Next)", err)
+				return
+			}
 			w.Header().Add("Content-Length", strconv.Itoa(int(h.Size)))
 			w.Header().Add("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", "ssl-proxy"))
 			_, err = io.Copy(w, tr)
 			if err != nil {
 				log.Println(err)
 			}
-		} else if currentAsset.ContentType == releases.CONTENT_TYPE_ZIP {
+		} else if currentAsset.ContentType == releases.ContentTypeZIP {
 			// assume .zip, need to read in whole file to unzip, assume single file
 			// TODO: consider size limits in future...
 			b, err := ioutil.ReadAll(binaryFile.Body)

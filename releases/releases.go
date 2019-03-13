@@ -7,22 +7,29 @@ import (
 	"net/http"
 )
 
-const GITHUB_API_BASE = "https://api.github.com"
+// GithubAPIBase represents the base url for the GitHub API
+const GithubAPIBase = "https://api.github.com"
 
-const CONTENT_TYPE_TAR_GZ = "application/x-gzip"
-const CONTENT_TYPE_ZIP = "application/zip"
+// Content type constants
+const (
+	ContentTypeTARGZ = "application/x-gzip"
+	ContentTypeZIP   = "application/zip"
+)
 
+// Asset represents an uploaded GitHub release asset
 type Asset struct {
 	DownloadURL string `json:"browser_download_url"`
 	ContentType string `json:"content_type"`
 }
 
+// Release represents a GitHub release entity
 type Release struct {
 	URL     string  `json:"url"`
 	Assets  []Asset `json:"assets"`
 	TagName string  `json:"tag_name"`
 }
 
+// GithubRepo represents a unique repository on the GitHub platform
 type GithubRepo struct {
 	Username string
 	Repo     string
@@ -30,7 +37,7 @@ type GithubRepo struct {
 
 // Get fetches the releases for a provided GithubRepo
 func Get(r GithubRepo) ([]Release, error) {
-	resp, err := http.Get(fmt.Sprintf("%s/repos/%s/%s/releases", GITHUB_API_BASE, r.Username, r.Repo))
+	resp, err := http.Get(fmt.Sprintf("%s/repos/%s/%s/releases", GithubAPIBase, r.Username, r.Repo))
 	if err != nil {
 		log.Println("ERROR: issue making API request")
 		log.Println(err)

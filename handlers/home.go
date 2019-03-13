@@ -7,7 +7,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-const HomeMessage = `
+const homeMessage = `
 <html>
 	<head>
 	<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/base-min.css">
@@ -50,6 +50,7 @@ const HomeMessage = `
 </html> 
 `
 
+// Home is the index handler that simply returns the homeMessage HTML above
 func Home(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	fmt.Fprint(w, HomeMessage)
+	fmt.Fprint(w, homeMessage)
 }
