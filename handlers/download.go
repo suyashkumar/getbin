@@ -25,10 +25,10 @@ type OS string
 
 // OS enumerated values
 const (
-	OSWindows = "WINDOWS"
-	OSDarwin  = "DARWIN"
-	OSLinux   = "LINUX"
-	OSEmpty   = ""
+	OSWindows = OS("WINDOWS")
+	OSDarwin  = OS("DARWIN")
+	OSLinux   = OS("LINUX")
+	OSEmpty   = OS("")
 )
 
 func (o OS) isValid() bool {
