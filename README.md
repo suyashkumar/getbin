@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://suyashkumar.com/assets/img/terminal_large.png" width="80">
   <h3 align="center">GitHub Release Downloader</h3>
-  <p align="center">Download latest GitHub release binaries (for your OS/arch) using <code>wget</code> or <code>curl</code></p>
+  <p align="center">Download any latest GitHub release binaries (for your OS/arch) using <code>wget</code> or <code>curl</code></p>
   <p align="center"><code>wget --content-disposition https://bin.suyash.io/suyashkumar/ssl-proxy</code></p>
   <p align="center"> <a href="https://goreportcard.com/report/github.com/suyashkumar/bin"><img src="https://goreportcard.com/badge/github.com/suyashkumar/bin" alt=""></a> <a href="https://godoc.org/github.com/suyashkumar/bin"><img src="https://godoc.org/github.com/suyashkumar/bin?status.svg" alt=""></a> 
   </p>
@@ -23,8 +23,10 @@ or with `curl` you usually must specify your os (since it is not included in the
 ```sh
 curl -LJ "https://bin.suyash.io/suyashkumar/ssl-proxy?os=darwin" | tar xvz 
 ```
-### General format to work with any* repo
-The generalized request format is `GET https://bin.suyash.io/GITHUB_USERNAME/GITHUB_REPO`. Again the goal is for this server to work for any repo (see section below for assumptions). Let's say we wanted the latest distribution of [`goreleaser/goreleaser`](https://github.com/goreleaser/goreleaser/):
+### Use with any* GitHub repo
+The generalized request format is `GET https://bin.suyash.io/GITHUB_USERNAME/GITHUB_REPO`. See section below for assumptions. 
+
+Let's say we wanted the latest distribution of [`goreleaser/goreleaser`](https://github.com/goreleaser/goreleaser/):
 ```sh
 wget -qO- https://bin.suyash.io/goreleaser/goreleaser | tar xvz 
 ```
