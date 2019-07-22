@@ -18,7 +18,7 @@ const homeMessage = `
 		<h1> GitHub Release Downloader </h1>
 		<p>
 			This tool helps you download the latest binaries from GitHub releases quickly using curl or wget.
-			Find out more at the <a href="https://github.com/suyashkumar/bin">GitHub README for this project.</a>
+			Find out more at the <a href="https://github.com/suyashkumar/getbin">GitHub README for this project.</a>
 		</p>
 		<p>
 			Let's say you wanted to download the latest version of	
@@ -30,20 +30,20 @@ const homeMessage = `
 		<p>
 			Download and untar the <b>latest</b> release of ssl-proxy for your OS (will be based on wget's 
 			<code>User-Agent</code>): <br />
-			<code>wget -qO- "https://bin.suyash.io/suyashkumar/ssl-proxy" | tar xvz</code> <br />
+			<code>wget -qO- "https://getbin.io/suyashkumar/ssl-proxy" | tar xvz</code> <br />
 		</p>
 		<p>
 			You can also specify the OS you wish to download for as follows (can be either <code>darwin</code>, 
 			<code>linux</code>, or <code>windows</code>: <br />
-			<code>wget -qO- "https://bin.suyash.io/suyashkumar/ssl-proxy?os=darwin" | tar xvz</code> <br />
+			<code>wget -qO- "https://getbin.io/suyashkumar/ssl-proxy?os=darwin" | tar xvz</code> <br />
 		</p> 
 		<p>
 			You can also let the server handle uncompression for you: <br /> 
-			<code>wget --content-disposition "https://bin.suyash.io/suyashkumar/ssl-proxy?os=darwin?uncompress=true"</code> <br />
+			<code>wget --content-disposition "https://getbin.io/suyashkumar/ssl-proxy?os=darwin?uncompress=true"</code> <br />
 		</p>
 		<p>
 			You can also use <code>curl</code>. Note, you must always specify <code>os</code> with curl. <br />
-			<code> curl -LJ "https://bin.suyash.io/suyashkumar/ssl-proxy?os=darwin" | tar xvz </code> <br />
+			<code> curl -LJ "https://getbin.io/suyashkumar/ssl-proxy?os=darwin" | tar xvz </code> <br />
 		</p>
 	</div>
 	</article>
