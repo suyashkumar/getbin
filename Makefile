@@ -1,4 +1,4 @@
-BINARY = binary-fetcher
+BINARY = getbin
 
 .PHONY: build
 build:
