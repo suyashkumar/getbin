@@ -2,33 +2,33 @@
   <img src="https://suyashkumar.com/assets/img/terminal_large.png" width="80">
   <h3 align="center">GitHub Release Downloader</h3>
   <p align="center">Download latest GitHub release binaries (for your OS/arch) using <code>wget</code> or <code>curl</code></p>
-  <p align="center"><code>wget --content-disposition https://bin.suyash.io/suyashkumar/ssl-proxy</code></p>
-  <p align="center"> <a href="https://goreportcard.com/report/github.com/suyashkumar/bin"><img src="https://goreportcard.com/badge/github.com/suyashkumar/bin" alt=""></a> <a href="https://godoc.org/github.com/suyashkumar/bin"><img src="https://godoc.org/github.com/suyashkumar/bin?status.svg" alt=""></a> 
+  <p align="center"><code>wget --content-disposition https://getbin.io/suyashkumar/ssl-proxy</code></p>
+  <p align="center"> <a href="https://goreportcard.com/report/github.com/suyashkumar/getbin"><img src="https://goreportcard.com/badge/github.com/suyashkumar/getbin" alt=""></a> <a href="https://godoc.org/github.com/suyashkumar/getbin"><img src="https://godoc.org/github.com/suyashkumar/getbin?status.svg" alt=""></a> 
   </p>
 </p>
 
 ## Overview
-This is a simple server (deployed @ https://bin.suyash.io) that makes it easy to download the latest binary associated with _any GitHub repo release_ using regular old `wget` and `curl`. It attempts to use your User-Agent to fetch the right GitHub release asset for your OS/arch, but also lets you provide query parameters to specify OS/arch, and optionally uncompress the release artifact on the fly. 
+This is a simple server (deployed @ https://getbin.io) that makes it easy to download the latest binary associated with _any GitHub repo release_ using regular old `wget` and `curl`. It attempts to use your User-Agent to fetch the right GitHub release asset for your OS/arch, but also lets you provide query parameters to specify OS/arch, and optionally uncompress the release artifact on the fly. 
 
 I mostly just built this as a way to distribute my software binaries easily without dealing with `brew`, `npm`, etc (though they certainly have their advantages & trust). I can just give my users a one line download link that will always get them the latest released binary for their platform, and _all I have to do is just update GitHub releases like I normally do_.
 
-Basic functionality currently exists (with some assumptions, see below), but this is still a work in progress with many improvements forthcoming. This currently will work as expected with all of my repos/releases.
+Basic functionality currently exists (with some assumptions, see below), but this is still a work in progress with many improvements forthcoming. This currently will work as expected with all of __my__ repos/releases.
 
 ## Usage
 Let's say you wanted to get the __latest__ [`suyashkumar/ssl-proxy`](https://github.com/suyashkumar/ssl-proxy) binary for your OS/arch. You simply:
 ```sh
-wget -qO- https://bin.suyash.io/suyashkumar/ssl-proxy | tar xvz 
+wget -qO- https://getbin.io/suyashkumar/ssl-proxy | tar xvz 
 ```
 or with `curl` you usually must specify your os (since it is not included in the User-Agent):
 ```sh
-curl -LJ "https://bin.suyash.io/suyashkumar/ssl-proxy?os=darwin" | tar xvz 
+curl -LJ "https://getbin.io/suyashkumar/ssl-proxy?os=darwin" | tar xvz 
 ```
 ### Use with any* GitHub repo
-The generalized request format is `GET https://bin.suyash.io/GITHUB_USERNAME/GITHUB_REPO`. See section below for assumptions. 
+The generalized request format is `GET https://getbin.io/GITHUB_USERNAME/GITHUB_REPO`. See section below for assumptions. 
 
 Let's say we wanted the latest distribution of [`goreleaser/goreleaser`](https://github.com/goreleaser/goreleaser/):
 ```sh
-wget -qO- https://bin.suyash.io/goreleaser/goreleaser | tar xvz 
+wget -qO- https://getbin.io/goreleaser/goreleaser | tar xvz 
 ```
 
 Generally, the server software attempts to detect your OS (and in the future, architecture) automatically from your `User-Agent`, but also allows you to specify your own intentions as seen with `curl` above. We're piping into `tar` here because the original release assets are compressed, but you can also uncompress on the fly (see below)
@@ -36,16 +36,16 @@ Generally, the server software attempts to detect your OS (and in the future, ar
 #### Uncompress on the fly
 If you want to not bother with piping into tar or zip as above, the server can decompress on the fly to serve you the binary (assuming it is the only file in the archive):
 ```sh
-wget --content-disposition "https://bin.suyash.io/suyashkumar/ssl-proxy?uncompress=true" 
+wget --content-disposition "https://getbin.io/suyashkumar/ssl-proxy?uncompress=true" 
 ```
 
 If your release asset is __not compressed__, you can simply:
 ```sh
-wget --content-disposition "https://bin.suyash.io/suyashkumar/ssl-proxy"
+wget --content-disposition "https://getbin.io/suyashkumar/ssl-proxy"
 ```
 or
 ```sh
-curl -LOJ "https://bin.suyash.io/suyashkumar/ssl-proxy?os=darwin"
+curl -LOJ "https://getbin.io/suyashkumar/ssl-proxy?os=darwin"
 ```
 
 
