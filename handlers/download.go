@@ -101,6 +101,10 @@ func Download(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		}
 	}
 
+	if currentAsset == nil {
+		sendErrorWithCode(w, "Unable to find a release asset for your platform in the latest release.", 400)
+	}
+
 	log.Printf("User-Agent: %s", r.Header.Get("User-Agent"))
 	log.Printf("Selected Asset: %s", currentAsset.DownloadURL)
 	if !opts.Uncompress {
