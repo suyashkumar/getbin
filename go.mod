@@ -4,7 +4,6 @@ go 1.20
 
 require (
 	github.com/julienschmidt/httprouter v1.3.0
-	github.com/suyashkumar/bin v1.3.1
 	golang.org/x/crypto v0.6.0
 )
 

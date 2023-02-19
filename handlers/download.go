@@ -17,7 +17,7 @@ import (
 	"strings"
 
 	"github.com/julienschmidt/httprouter"
-	"github.com/suyashkumar/bin/releases"
+	"github.com/suyashkumar/getbin/releases"
 )
 
 // OS is an enum representing an operating system variant

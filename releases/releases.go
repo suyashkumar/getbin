@@ -7,8 +7,9 @@ import (
 	"net/http"
 )
 
-// GithubAPIBase represents the base url for the GitHub API
-const GithubAPIBase = "https://api.github.com"
+// GithubAPIBase represents the base url for the GitHub API. This can be
+// changed, primarily for test purposes.
+var GithubAPIBase = "https://api.github.com"
 
 // Content type constants
 const (
@@ -47,7 +48,7 @@ func Get(r GithubRepo) ([]Release, error) {
 	dec := json.NewDecoder(resp.Body)
 	var releases []Release
 	if err = dec.Decode(&releases); err != nil {
-		log.Println("ERROR: issue decoding Github API response")
+		log.Println("ERROR: issue decoding Github API responseee")
 		log.Println(err)
 		return nil, err
 	}
