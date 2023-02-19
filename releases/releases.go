@@ -48,7 +48,7 @@ func Get(r GithubRepo) ([]Release, error) {
 	dec := json.NewDecoder(resp.Body)
 	var releases []Release
 	if err = dec.Decode(&releases); err != nil {
-		log.Println("ERROR: issue decoding Github API responseee")
+		log.Println("ERROR: issue decoding Github API response")
 		log.Println(err)
 		return nil, err
 	}
