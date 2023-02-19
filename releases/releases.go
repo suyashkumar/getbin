@@ -7,8 +7,9 @@ import (
 	"net/http"
 )
 
-// GithubAPIBase represents the base url for the GitHub API
-const GithubAPIBase = "https://api.github.com"
+// GithubAPIBase represents the base url for the GitHub API. This can be
+// changed, primarily for test purposes.
+var GithubAPIBase = "https://api.github.com"
 
 // Content type constants
 const (

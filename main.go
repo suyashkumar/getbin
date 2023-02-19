@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
-	"github.com/suyashkumar/bin/handlers"
+	"github.com/suyashkumar/getbin/handlers"
 	"golang.org/x/crypto/acme/autocert"
 )
 
