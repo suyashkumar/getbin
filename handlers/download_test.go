@@ -15,7 +15,10 @@ var defaultGithubAPIResponse = []byte(`[{
 	  "assets": [
 		   {"browser_download_url": "http://localhost/some-file-darwin-x86.tar.gz", "content_type": "application/x-gzip"},
 		   {"browser_download_url": "http://localhost/some-file-windows-x86.tar.gz", "content_type": "application/x-gzip"},
-		   {"browser_download_url": "http://localhost/some-file-linux-x86.tar.gz", "content_type": "application/x-gzip"}
+		   {"browser_download_url": "http://localhost/some-file-linux-x86.tar.gz", "content_type": "application/x-gzip"},
+		   {"browser_download_url": "http://localhost/some-file-linux-arm64.tar.gz", "content_type": "application/x-gzip"},
+		   {"browser_download_url": "http://localhost/some-file-windows-arm64.tar.gz", "content_type": "application/x-gzip"},
+		   {"browser_download_url": "http://localhost/some-file-darwin-arm64.tar.gz", "content_type": "application/x-gzip"}
 	  ]
  }]`)
 
@@ -41,6 +44,19 @@ func TestDownload_Redirect(t *testing.T) {
 			wantRedirect:      "http://localhost/some-file-darwin-x86.tar.gz",
 		},
 		{
+			name:              "darwin option arm64",
+			requestPath:       "/username/repo?os=darwin&arch=arm64",
+			githubAPIResponse: defaultGithubAPIResponse,
+			wantRedirect:      "http://localhost/some-file-darwin-arm64.tar.gz",
+		},
+		{
+			name:              "darwin user-agent arm64",
+			requestPath:       "/username/repo",
+			userAgent:         "darwin user agent arm64",
+			githubAPIResponse: defaultGithubAPIResponse,
+			wantRedirect:      "http://localhost/some-file-darwin-arm64.tar.gz",
+		},
+		{
 			name:              "linux option",
 			requestPath:       "/username/repo?os=linux",
 			githubAPIResponse: defaultGithubAPIResponse,
@@ -54,6 +70,19 @@ func TestDownload_Redirect(t *testing.T) {
 			wantRedirect:      "http://localhost/some-file-linux-x86.tar.gz",
 		},
 		{
+			name:              "linux option arm64",
+			requestPath:       "/username/repo?os=linux&arch=arm64",
+			githubAPIResponse: defaultGithubAPIResponse,
+			wantRedirect:      "http://localhost/some-file-linux-arm64.tar.gz",
+		},
+		{
+			name:              "linux user-agent arm64",
+			requestPath:       "/username/repo",
+			userAgent:         "linux user agent arm64",
+			githubAPIResponse: defaultGithubAPIResponse,
+			wantRedirect:      "http://localhost/some-file-linux-arm64.tar.gz",
+		},
+		{
 			name:              "windows option",
 			requestPath:       "/username/repo?os=windows",
 			githubAPIResponse: defaultGithubAPIResponse,
@@ -65,6 +94,19 @@ func TestDownload_Redirect(t *testing.T) {
 			userAgent:         "windows user agent",
 			githubAPIResponse: defaultGithubAPIResponse,
 			wantRedirect:      "http://localhost/some-file-windows-x86.tar.gz",
+		},
+		{
+			name:              "windows option arm64",
+			requestPath:       "/username/repo?os=windows&arch=arm64",
+			githubAPIResponse: defaultGithubAPIResponse,
+			wantRedirect:      "http://localhost/some-file-windows-arm64.tar.gz",
+		},
+		{
+			name:              "windows user-agent arm64",
+			requestPath:       "/username/repo",
+			userAgent:         "windows user agent arm64",
+			githubAPIResponse: defaultGithubAPIResponse,
+			wantRedirect:      "http://localhost/some-file-windows-arm64.tar.gz",
 		},
 	}
 
