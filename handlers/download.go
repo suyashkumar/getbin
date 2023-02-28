@@ -20,37 +20,23 @@ import (
 	"github.com/suyashkumar/getbin/releases"
 )
 
-// OS is an enum representing an operating system variant
-type OS string
-
-// OS enumerated values
-const (
-	OSWindows = OS("WINDOWS")
-	OSDarwin  = OS("DARWIN")
-	OSLinux   = OS("LINUX")
-	OSEmpty   = OS("")
-)
-
-func (o OS) isValid() bool {
-	return o == OSWindows || o == OSDarwin || o == OSLinux
-}
-
-// DownloadOptions represents various options that can be supplied to the download endpoint
-type DownloadOptions struct {
-	OS         OS
-	Uncompress bool
-}
-
 // Simple regex for now, used both for User-Agent and for matching GitHub release asset names
 var isDarwin = regexp.MustCompile(`(?i).*(darwin|macintosh).*`)
 var isLinux = regexp.MustCompile(`(?i).*linux.*`)
 var isWindows = regexp.MustCompile(`(?i).*windows.*`)
 var isX86AMD64 = regexp.MustCompile(`(?i).*(x86|amd64).*`)
+var isARM64 = regexp.MustCompile(`(?i).*arm64.*`)
 
-var osToTester = map[OS]*regexp.Regexp{
+var osToRegexp = map[OS]*regexp.Regexp{
 	OSDarwin:  isDarwin,
 	OSLinux:   isLinux,
 	OSWindows: isWindows,
+}
+
+var archToRegexp = map[Arch]*regexp.Regexp{
+	ArchX86:   isX86AMD64,
+	ArchAMD64: isX86AMD64,
+	ArchARM64: isARM64,
 }
 
 // Download handles resolving the latest GitHub release for the given request and either redirecting the download request
@@ -78,24 +64,14 @@ func Download(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 
 	latestRelease := rls[0]
 
-	var currentPlatformTest *regexp.Regexp
-	if opts.OS != OSEmpty {
-		currentPlatformTest = osToTester[opts.OS]
-	} else {
-		currentPlatformTest = isLinux // Note: linux is the default
-		userAgent := r.Header.Get("User-Agent")
-		for _, isOS := range osToTester {
-			if isOS.MatchString(userAgent) {
-				currentPlatformTest = isOS
-				break
-			}
-		}
-	}
+	userAgent := r.Header.Get("User-Agent")
+	selectedOSRegexp := getOSRegexp(opts, userAgent)
+	selectedArchRegexp := getArchRegexp(opts, userAgent)
 
 	var currentAsset *releases.Asset
 	for _, a := range latestRelease.Assets {
 		file := path.Base(a.DownloadURL)
-		if currentPlatformTest.MatchString(file) && isX86AMD64.MatchString(file) { // match os and x86/amd64
+		if selectedOSRegexp.MatchString(file) && selectedArchRegexp.MatchString(file) {
 			currentAsset = &a
 			break
 		}
@@ -181,15 +157,63 @@ func Download(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 			}
 		}
 	}
-
 }
 
-func parseDownloadOptions(u *url.URL) *DownloadOptions {
-	opts := DownloadOptions{}
+// getOSRegexp returns the appropriate OS identifying regexp based on the
+// downloadOptions and (if needed) the userAgent.
+func getOSRegexp(opts *downloadOptions, userAgent string) *regexp.Regexp {
+	if opts.OS != OSEmpty {
+		return osToRegexp[opts.OS]
+	}
+
+	// Check userAgent to infer OS:
+	for _, osRegexp := range osToRegexp {
+		if osRegexp.MatchString(userAgent) {
+			return osRegexp
+		}
+	}
+
+	return isLinux // Note: Linux is the default
+}
+
+// getArchRegexp returns the appropriate Arch identifying regexp based on the
+// downloadOptions and (if needed) the userAgent.
+func getArchRegexp(opts *downloadOptions, userAgent string) *regexp.Regexp {
+	if opts.Arch != ArchEmpty {
+		return archToRegexp[opts.Arch]
+	}
+
+	// Check userAgent to infer Arch:
+	for _, archRegexp := range archToRegexp {
+		if archRegexp.MatchString(userAgent) {
+			return archRegexp
+		}
+	}
+
+	return isX86AMD64 // Note: x86 / amd64 is the default.
+}
+
+// downloadOptions represents various options that can be supplied to the download endpoint
+type downloadOptions struct {
+	OS         OS
+	Arch       Arch
+	Uncompress bool
+}
+
+func parseDownloadOptions(u *url.URL) *downloadOptions {
+	opts := downloadOptions{}
 	if val, ok := u.Query()["os"]; ok {
 		os := OS(strings.ToUpper(val[0]))
 		if os.isValid() {
 			opts.OS = os
+		}
+	}
+
+	if val, ok := u.Query()["arch"]; ok {
+		arch := Arch(strings.ToUpper(val[0]))
+		if arch.isValid() {
+			opts.Arch = arch
+			log.Println("opts", opts.Arch)
 		}
 	}
 
@@ -201,5 +225,33 @@ func parseDownloadOptions(u *url.URL) *DownloadOptions {
 	}
 
 	return &opts
+}
 
+// OS is an enum representing an operating system variant.
+type OS string
+
+// OS enumerated values
+const (
+	OSWindows = OS("WINDOWS")
+	OSDarwin  = OS("DARWIN")
+	OSLinux   = OS("LINUX")
+	OSEmpty   = OS("")
+)
+
+func (o OS) isValid() bool {
+	return o == OSWindows || o == OSDarwin || o == OSLinux
+}
+
+// Arch is an enum representing supported architectures.
+type Arch string
+
+const (
+	ArchAMD64 = Arch("AMD64")
+	ArchX86   = Arch("X86")
+	ArchARM64 = Arch("ARM64")
+	ArchEmpty = Arch("")
+)
+
+func (a Arch) isValid() bool {
+	return a == ArchAMD64 || a == ArchX86 || a == ArchARM64
 }
